@@ -6,25 +6,25 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CircularSentenceTest {
-    private lateinit var cs: CircularSentence
+    private lateinit var sut: CircularSentence
 
     @BeforeEach
     fun setUp() {
-        cs = CircularSentence()
+        sut = CircularSentence()
     }
 
     @Test
     fun `leetcode exercises sound delightful is a circular sentence`() {
-        assertTrue(cs.isCircularSentence("leetcode exercises sound delightful"))
+        assertTrue(sut.isCircularSentence("leetcode exercises sound delightful"))
     }
 
     @Test
     fun `eetcode is a circular sentence`() {
-        assertTrue(cs.isCircularSentence("eetcode"))
+        assertTrue(sut.isCircularSentence("eetcode"))
     }
 
     @Test
     fun `Leetcode is cool is not a circular sentence`() {
-        assertFalse(cs.isCircularSentence("Leetcode is cool"))
+        assertFalse(sut.isCircularSentence("Leetcode is cool"))
     }
 }

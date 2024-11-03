@@ -6,11 +6,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class ReverseLinkedListTest {
-    private lateinit var reverseLinkedList: ReverseLinkedList
+    private lateinit var sut: ReverseLinkedList
 
     @BeforeEach
     fun setUp() {
-        reverseLinkedList = ReverseLinkedList()
+        sut = ReverseLinkedList()
     }
 
     @Test
@@ -22,7 +22,7 @@ class ReverseLinkedListTest {
             li = temp
         }
 
-        val reversed = reverseLinkedList.reverseList(li)
+        val reversed = sut.reverseList(li)
 
         assertEquals(5, reversed?.`val`)
         assertEquals(4, reversed?.next?.`val`)
@@ -36,7 +36,7 @@ class ReverseLinkedListTest {
         val li = ListNode(1)
         li.next = ListNode(2)
 
-        val reversed = reverseLinkedList.reverseList(li)
+        val reversed = sut.reverseList(li)
 
         assertEquals(2, reversed?.`val`)
         assertEquals(1, reversed?.next?.`val`)
@@ -44,7 +44,7 @@ class ReverseLinkedListTest {
 
     @Test
     fun `empty list`() {
-        val reversed = reverseLinkedList.reverseList(null)
+        val reversed = sut.reverseList(null)
 
         assertNull(reversed)
     }
