@@ -6,6 +6,7 @@ My solutions to LeetCode problems in Kotlin.
 
 |                                 #                                  |                                                    Title                                                     | Difficulty |
 |:------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|:----------:|
+|      [1](https://leetcode.com/problems/two-sum/description/)       |                      [Two Sum](src/main/kotlin/com/schmoczer/leetcode/_0001/TwoSum.kt)                       |    Easy    |
 | [5](https://leetcode.com/problems/longest-palindromic-substring/)  | [Longest Palindromic Substring](src/main/kotlin/com/schmoczer/leetcode/_0005/LongestPalindromicSubstring.kt) |   Medium   |
 |     [8](https://leetcode.com/problems/string-to-integer-atoi/)     |         [String to Integer (atoi)](src/main/kotlin/com/schmoczer/leetcode/_0008/StringToInteger.kt)          |   Medium   |
 |       [20](https://leetcode.com/problems/valid-parentheses/)       |            [Valid Parentheses](src/main/kotlin/com/schmoczer/leetcode/_0020/ValidParentheses.kt)             |    Easy    |
