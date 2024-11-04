@@ -17,3 +17,4 @@ My solutions to LeetCode problems in Kotlin.
 |        [344](https://leetcode.com/problems/reverse-string/)        |               [Reverse String](src/main/kotlin/com/schmoczer/leetcode/_0344/ReverseString.kt)                |    Easy    |
 |        [796](https://leetcode.com/problems/rotate-string/)         |                [Rotate String](src/main/kotlin/com/schmoczer/leetcode/_0796/RotateString.kt)                 |    Easy    |
 |      [2490](https://leetcode.com/problems/circular-sentence/)      |            [Circular Sentence](src/main/kotlin/com/schmoczer/leetcode/_2490/CircularSentence.kt)             |    Easy    |
+|   [3163](https://leetcode.com/problems/string-compression-iii/)    |         [String Compression III](src/main/kotlin/com/schmoczer/leetcode/_3163/StringCompression3.kt)         |   Medium   |
