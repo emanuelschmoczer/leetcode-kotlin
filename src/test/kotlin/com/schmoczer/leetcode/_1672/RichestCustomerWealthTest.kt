@@ -5,11 +5,11 @@ import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 
 class RichestCustomerWealthTest {
-    private lateinit var richestCustomerWealth: RichestCustomerWealth
+    private lateinit var sut: RichestCustomerWealth
 
     @BeforeEach
     fun setUp() {
-        richestCustomerWealth = RichestCustomerWealth()
+        sut = RichestCustomerWealth()
     }
 
     @Test
@@ -17,7 +17,7 @@ class RichestCustomerWealthTest {
         val input = arrayOf(intArrayOf(1, 2, 3), intArrayOf(3, 2, 1))
         val expected = 6
 
-        val result = richestCustomerWealth.maximumWealth(input)
+        val result = sut.maximumWealth(input)
 
         assertEquals(expected, result)
     }
@@ -27,7 +27,7 @@ class RichestCustomerWealthTest {
         val input = arrayOf(intArrayOf(1, 5), intArrayOf(7, 3), intArrayOf(3, 5))
         val expected = 10
 
-        val result = richestCustomerWealth.maximumWealth(input)
+        val result = sut.maximumWealth(input)
 
         assertEquals(expected, result)
     }
@@ -37,7 +37,7 @@ class RichestCustomerWealthTest {
         val input = arrayOf(intArrayOf(2, 8, 7), intArrayOf(7, 1, 3), intArrayOf(1, 9, 5))
         val expected = 17
 
-        val result = richestCustomerWealth.maximumWealth(input)
+        val result = sut.maximumWealth(input)
 
         assertEquals(expected, result)
     }
