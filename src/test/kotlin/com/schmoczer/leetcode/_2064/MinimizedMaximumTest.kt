@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._2064
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class MinimizedMaximumTest {
+    private companion object {
+        @JvmStatic
+        fun testInputs() = listOf(
+            Arguments.of(6, intArrayOf(11, 6), 3),
+            Arguments.of(7, intArrayOf(15, 10, 10), 5),
+            Arguments.of(1, intArrayOf(100000), 100000),
+        )
+    }
+
     private lateinit var sut: MinimizedMaximum
 
     @BeforeEach
@@ -12,34 +23,9 @@ class MinimizedMaximumTest {
         sut = MinimizedMaximum()
     }
 
-    @Test
-    fun `for 6 retail stores and 11,6 products the minimized maximum number of products is 3`() {
-        val quantities = intArrayOf(11, 6)
-        val numberOfStores = 6
-        val expected = 3
-
-        val result = sut.minimizedMaximum(numberOfStores, quantities)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `for 7 retail stores and 15,10,10 products the minimized maximum number of products is 5`() {
-        val quantities = intArrayOf(15, 10, 10)
-        val numberOfStores = 7
-        val expected = 5
-
-        val result = sut.minimizedMaximum(numberOfStores, quantities)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `for 1 retail store and 100000 products the minimized maximum number of products is 100000`() {
-        val quantities = intArrayOf(100000)
-        val numberOfStores = 1
-        val expected = 100000
-
+    @ParameterizedTest(name = "minimized maximum for {0} stores and products {1} is {2}")
+    @MethodSource("testInputs")
+    fun `returns the correct minimized maximum`(numberOfStores: Int, quantities: IntArray, expected: Int) {
         val result = sut.minimizedMaximum(numberOfStores, quantities)
 
         assertEquals(expected, result)

@@ -1,10 +1,53 @@
 package com.schmoczer.leetcode._1861
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
 
 class RotatingTheBoxTest {
+    private companion object {
+        @JvmStatic
+        fun boxInputs() = listOf(
+            Arguments.of(
+                arrayOf(charArrayOf('#', '.', '#')),
+                arrayOf(
+                    charArrayOf('.'),
+                    charArrayOf('#'),
+                    charArrayOf('#'),
+                ),
+            ),
+            Arguments.of(
+                arrayOf(
+                    charArrayOf('#', '.', '*', '.'),
+                    charArrayOf('#', '#', '*', '.'),
+                ),
+                arrayOf(
+                    charArrayOf('#', '.'),
+                    charArrayOf('#', '#'),
+                    charArrayOf('*', '*'),
+                    charArrayOf('.', '.'),
+                ),
+            ),
+            Arguments.of(
+                arrayOf(
+                    charArrayOf('#', '#', '*', '.', '*', '.'),
+                    charArrayOf('#', '#', '#', '*', '.', '.'),
+                    charArrayOf('#', '#', '#', '.', '#', '.'),
+                ),
+                arrayOf(
+                    charArrayOf('.', '#', '#'),
+                    charArrayOf('.', '#', '#'),
+                    charArrayOf('#', '#', '*'),
+                    charArrayOf('#', '*', '.'),
+                    charArrayOf('#', '.', '*'),
+                    charArrayOf('#', '.', '.'),
+                ),
+            ),
+        )
+    }
+
     private lateinit var sut: RotatingTheBox
 
     @BeforeEach
@@ -12,61 +55,12 @@ class RotatingTheBoxTest {
         sut = RotatingTheBox()
     }
 
-    @Test
-    fun `matrix with 1 row rotated`() {
-        val input = arrayOf(charArrayOf('#', '.', '#'))
-        val expected = arrayOf(
-            charArrayOf('.'),
-            charArrayOf('#'),
-            charArrayOf('#'),
-        )
-
+    @ParameterizedTest(name = "rotated box for input {0} is {1}")
+    @MethodSource("boxInputs")
+    fun `returns the correct rotated box`(input: Array<CharArray>, expected: Array<CharArray>) {
         val result = sut.rotateTheBox(input)
 
-        for (i in 0 until expected.size) {
-            assertContentEquals(expected[i], result[i])
-        }
-    }
-
-    @Test
-    fun `matrix with 2 rows rotated`() {
-        val input = arrayOf(
-            charArrayOf('#', '.', '*', '.'),
-            charArrayOf('#', '#', '*', '.'),
-        )
-        val expected = arrayOf(
-            charArrayOf('#', '.'),
-            charArrayOf('#', '#'),
-            charArrayOf('*', '*'),
-            charArrayOf('.', '.'),
-        )
-
-        val result = sut.rotateTheBox(input)
-
-        for (i in 0 until expected.size) {
-            assertContentEquals(expected[i], result[i])
-        }
-    }
-
-    @Test
-    fun `matrix with 3 rows rotated`() {
-        val input = arrayOf(
-            charArrayOf('#', '#', '*', '.', '*', '.'),
-            charArrayOf('#', '#', '#', '*', '.', '.'),
-            charArrayOf('#', '#', '#', '.', '#', '.'),
-        )
-        val expected = arrayOf(
-            charArrayOf('.', '#', '#'),
-            charArrayOf('.', '#', '#'),
-            charArrayOf('#', '#', '*'),
-            charArrayOf('#', '*', '.'),
-            charArrayOf('#', '.', '*'),
-            charArrayOf('#', '.', '.'),
-        )
-
-        val result = sut.rotateTheBox(input)
-
-        for (i in 0 until expected.size) {
+        for (i in expected.indices) {
             assertContentEquals(expected[i], result[i])
         }
     }

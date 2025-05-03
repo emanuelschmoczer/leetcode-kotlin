@@ -1,10 +1,33 @@
 package com.schmoczer.leetcode._3254
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
 
 class FindThePowerOfKSizeSubarraysTest {
+    private companion object {
+        @JvmStatic
+        fun subarrayInputs() = listOf(
+            Arguments.of(
+                intArrayOf(1, 2, 3, 4, 3, 2, 5),
+                3,
+                intArrayOf(3, 4, -1, -1, -1),
+            ),
+            Arguments.of(
+                intArrayOf(2, 2, 2, 2, 2),
+                4,
+                intArrayOf(-1, -1),
+            ),
+            Arguments.of(
+                intArrayOf(3, 2, 3, 2, 3, 2),
+                2,
+                intArrayOf(-1, 3, -1, 3, -1),
+            ),
+        )
+    }
+
     private lateinit var sut: FindThePowerOfKSizeSubarrays
 
     @BeforeEach
@@ -12,34 +35,9 @@ class FindThePowerOfKSizeSubarraysTest {
         sut = FindThePowerOfKSizeSubarrays()
     }
 
-    @Test
-    fun `power of all sub-arrays of size 3 of 1,2,3,4,3,2,5 is 3,4,-1,-1,-1`() {
-        val input = intArrayOf(1, 2, 3, 4, 3, 2, 5)
-        val k = 3
-        var expected = intArrayOf(3, 4, -1, -1, -1)
-
-        val result = sut.resultsArray(input, k)
-
-        assertContentEquals(expected, result)
-    }
-
-    @Test
-    fun `power of all sub-arrays of size 4 of 2,2,2,2,2 is -1,-1`() {
-        val input = intArrayOf(2, 2, 2, 2, 2)
-        val k = 4
-        var expected = intArrayOf(-1, -1)
-
-        val result = sut.resultsArray(input, k)
-
-        assertContentEquals(expected, result)
-    }
-
-    @Test
-    fun `power of all sub-arrays of size 2 of 3,2,3,2,3,2 is -1,3,-1,3,-1`() {
-        val input = intArrayOf(3, 2, 3, 2, 3, 2)
-        val k = 2
-        var expected = intArrayOf(-1, 3, -1, 3, -1)
-
+    @ParameterizedTest(name = "power of all sub-arrays of size {1} for input {0} is {2}")
+    @MethodSource("subarrayInputs")
+    fun `returns the correct power of subarrays`(input: IntArray, k: Int, expected: IntArray) {
         val result = sut.resultsArray(input, k)
 
         assertContentEquals(expected, result)

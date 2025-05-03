@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._0151
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class ReverseWordsInStringTest {
+    private companion object {
+        @JvmStatic
+        fun reverseWordsInputs() = listOf(
+            Arguments.of("the sky is blue", "blue is sky the"),
+            Arguments.of("  hello world  ", "world hello"),
+            Arguments.of("a good   example", "example good a"),
+        )
+    }
+
     private lateinit var sut: ReverseWordsInString
 
     @BeforeEach
@@ -12,18 +23,11 @@ class ReverseWordsInStringTest {
         sut = ReverseWordsInString()
     }
 
-    @Test
-    fun `sentence with 4 words and without additional whitespace`() {
-        assertEquals("blue is sky the", sut.reverseWords("the sky is blue"))
-    }
+    @ParameterizedTest(name = "reverse words in \"{0}\" results in \"{1}\"")
+    @MethodSource("reverseWordsInputs")
+    fun `reverses words in a string`(input: String, expected: String) {
+        val result = sut.reverseWords(input)
 
-    @Test
-    fun `no leading or trailing whitespaces reversed String`() {
-        assertEquals("world hello", sut.reverseWords("  hello world  "))
-    }
-
-    @Test
-    fun `no additional whitespaces between words in reversed String`() {
-        assertEquals("example good a", sut.reverseWords("a good   example"))
+        assertEquals(expected, result)
     }
 }

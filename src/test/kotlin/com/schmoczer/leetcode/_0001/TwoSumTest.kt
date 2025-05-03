@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._0001
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
 
 class TwoSumTest {
+    private companion object {
+        @JvmStatic
+        fun twoSumInputs() = listOf(
+            Arguments.of(intArrayOf(2, 7, 11, 15), 9, intArrayOf(0, 1)),
+            Arguments.of(intArrayOf(3, 2, 4), 6, intArrayOf(1, 2)),
+            Arguments.of(intArrayOf(3, 3), 6, intArrayOf(0, 1)),
+        )
+    }
+
     private lateinit var sut: TwoSum
 
     @BeforeEach
@@ -12,27 +23,11 @@ class TwoSumTest {
         sut = TwoSum()
     }
 
-    @Test
-    fun `first and second index of 2,7,11,15 lead for target of 9`() {
-        val input = intArrayOf(2, 7, 11, 15)
-        val expected = intArrayOf(0, 1)
+    @ParameterizedTest(name = "two sum for input {0} with target {1} is {2}")
+    @MethodSource("twoSumInputs")
+    fun `returns the correct indices for two sum`(input: IntArray, target: Int, expected: IntArray) {
+        val result = sut.twoSum(input, target)
 
-        assertContentEquals(expected, sut.twoSum(input, 9))
-    }
-
-    @Test
-    fun `second and third index of 3,2,4 for target of 6`() {
-        val input = intArrayOf(3, 2, 4)
-        val expected = intArrayOf(1, 2)
-
-        assertContentEquals(expected, sut.twoSum(input, 6))
-    }
-
-    @Test
-    fun `first and second index of 3,3 for target of 6`() {
-        val input = intArrayOf(3, 3)
-        val expected = intArrayOf(0, 1)
-
-        assertContentEquals(expected, sut.twoSum(input, 6))
+        assertContentEquals(expected, result)
     }
 }

@@ -1,10 +1,22 @@
 package com.schmoczer.leetcode._2516
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class TakeKOfEachCharacterFromLeftAndRightTest {
+    private companion object {
+        @JvmStatic
+        fun inputProvider() = listOf(
+            Arguments.of("aabaaaacaabc", 2, 8),
+            Arguments.of("a", 1, -1),
+            Arguments.of("abc", 1, 3),
+            Arguments.of("caaababcaa", 2, 7),
+        )
+    }
+
     private lateinit var sut: TakeKOfEachCharacterFromLeftAndRight
 
     @BeforeEach
@@ -12,45 +24,9 @@ class TakeKOfEachCharacterFromLeftAndRightTest {
         sut = TakeKOfEachCharacterFromLeftAndRight()
     }
 
-    @Test
-    fun `minimum number of minutes for at least 2 characters of aabaaaacaabc is 8`() {
-        val input = "aabaaaacaabc"
-        val k = 2
-        val expected = 8
-
-        val result = sut.takeCharacters(input, k)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `minimum number of minutes for at least 1 characters of a is -1`() {
-        val input = "a"
-        val k = 1
-        val expected = -1
-
-        val result = sut.takeCharacters(input, k)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `minimum number of minutes for at least 1 characters of abc is 3`() {
-        val input = "abc"
-        val k = 1
-        val expected = 3
-
-        val result = sut.takeCharacters(input, k)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `minimum number of minutes for at least 2 characters of caaababcaa is 7`() {
-        val input = "caaababcaa"
-        val k = 2
-        val expected = 7
-
+    @ParameterizedTest(name = "minimum number of minutes for input \"{0}\" with k = {1} is {2}")
+    @MethodSource("inputProvider")
+    fun `returns the correct minimum number of minutes`(input: String, k: Int, expected: Int) {
         val result = sut.takeCharacters(input, k)
 
         assertEquals(expected, result)

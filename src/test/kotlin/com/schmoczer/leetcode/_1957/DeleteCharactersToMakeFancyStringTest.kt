@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._1957
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class DeleteCharactersToMakeFancyStringTest {
+    private companion object {
+        @JvmStatic
+        fun fancyStringInputs() = listOf(
+            Arguments.of("leeetcode", "leetcode"),
+            Arguments.of("aaabaaaa", "aabaa"),
+            Arguments.of("aab", "aab"),
+        )
+    }
+
     private lateinit var sut: DeleteCharactersToMakeFancyString
 
     @BeforeEach
@@ -12,18 +23,11 @@ class DeleteCharactersToMakeFancyStringTest {
         sut = DeleteCharactersToMakeFancyString()
     }
 
-    @Test
-    fun `leeetcode made fancy is leetcode`() {
-        assertEquals("leetcode", sut.makeFancyString("leeetcode"))
-    }
+    @ParameterizedTest(name = "fancy string for input \"{0}\" is \"{1}\"")
+    @MethodSource("fancyStringInputs")
+    fun `returns the correct fancy string`(input: String, expected: String) {
+        val result = sut.makeFancyString(input)
 
-    @Test
-    fun `aaabaaaa made fancy is aabaa`() {
-        assertEquals("aabaa", sut.makeFancyString("aaabaaaa"))
-    }
-
-    @Test
-    fun `aab made fance is still aab`() {
-        assertEquals("aab", sut.makeFancyString("aab"))
+        assertEquals(expected, result)
     }
 }

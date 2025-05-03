@@ -3,9 +3,24 @@ package com.schmoczer.leetcode._0383
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class RansomNoteTest {
+    private companion object {
+        @JvmStatic
+        fun notConstructable() = listOf(
+            Arguments.of("a", "b"),
+            Arguments.of("aa", "ab"),
+        )
+
+        @JvmStatic
+        fun constructable() = listOf(
+            Arguments.of("aa", "aab"),
+        )
+    }
+
     private lateinit var sut: RansomNote
 
     @BeforeEach
@@ -13,27 +28,15 @@ class RansomNoteTest {
         sut = RansomNote()
     }
 
-    @Test
-    fun `a can not be constructed from b`() {
-        val note = "a"
-        val magazine = "b"
-
+    @ParameterizedTest(name = "{0} can not be constructed from {1}")
+    @MethodSource("notConstructable")
+    fun `returns false when ransom note can not be constructed`(note: String, magazine: String) {
         assertFalse(sut.canConstruct(note, magazine))
     }
 
-    @Test
-    fun `aa can not be constructed from ab`() {
-        val note = "aa"
-        val magazine = "ab"
-
-        assertFalse(sut.canConstruct(note, magazine))
-    }
-
-    @Test
-    fun `aa can be constructed from aab`() {
-        val note = "aa"
-        val magazine = "aab"
-
+    @ParameterizedTest(name = "{0} can be constructed from {1}")
+    @MethodSource("constructable")
+    fun `returns true when ransom note can be constructed`(note: String, magazine: String) {
         assertTrue(sut.canConstruct(note, magazine))
     }
 }

@@ -1,11 +1,21 @@
 package com.schmoczer.leetcode._3011
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.assertEquals
 
 class FindIfArrayCanBeSortedTest {
+    private companion object {
+        @JvmStatic
+        fun arrayInputs() = listOf(
+            Arguments.of(intArrayOf(8, 4, 2, 30, 15), true),
+            Arguments.of(intArrayOf(1, 2, 3, 4, 5), true),
+            Arguments.of(intArrayOf(3, 16, 8, 4, 2), false),
+        )
+    }
+
     private lateinit var sut: FindIfArrayCanBeSorted
 
     @BeforeEach
@@ -13,24 +23,11 @@ class FindIfArrayCanBeSortedTest {
         sut = FindIfArrayCanBeSorted()
     }
 
-    @Test
-    fun `8,4,2,30,15 can be sorted`() {
-        val input = intArrayOf(8, 4, 2, 30, 15)
+    @ParameterizedTest(name = "array {0} can be sorted: {1}")
+    @MethodSource("arrayInputs")
+    fun `checks if array can be sorted`(input: IntArray, expected: Boolean) {
+        val result = sut.canSortArray(input)
 
-        assertTrue(sut.canSortArray(input))
-    }
-
-    @Test
-    fun `already sorted array can be sorted`() {
-        val input = intArrayOf(1, 2, 3, 4, 5)
-
-        assertTrue(sut.canSortArray(input))
-    }
-
-    @Test
-    fun `3,16,8,4,2 can not be sorted`() {
-        val input = intArrayOf(3, 16, 8, 4, 2)
-
-        assertFalse(sut.canSortArray(input))
+        assertEquals(expected, result)
     }
 }

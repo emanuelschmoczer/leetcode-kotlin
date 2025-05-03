@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._2275
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class LargestCombinationTest {
+    private companion object {
+        @JvmStatic
+        fun combinationInputs() = listOf(
+            Arguments.of(intArrayOf(16, 17, 71, 62, 12, 24, 14), 4),
+            Arguments.of(intArrayOf(8, 8), 2),
+            Arguments.of(intArrayOf(1, 2, 4, 8), 1),
+        )
+    }
+
     private lateinit var sut: LargestCombination
 
     @BeforeEach
@@ -12,17 +23,11 @@ class LargestCombinationTest {
         sut = LargestCombination()
     }
 
-    @Test
-    fun `largest combination of 16,17,71,62,12,24,14 is 4`() {
-        val input = intArrayOf(16, 17, 71, 62, 12, 24, 14)
+    @ParameterizedTest(name = "largest combination for input {0} is {1}")
+    @MethodSource("combinationInputs")
+    fun `returns the correct largest combination`(input: IntArray, expected: Int) {
+        val result = sut.largestCombination(input)
 
-        assertEquals(4, sut.largestCombination(input))
-    }
-
-    @Test
-    fun `largest combination fo 8,8 is 2`() {
-        val input = intArrayOf(8, 8)
-
-        assertEquals(2, sut.largestCombination(input))
+        assertEquals(expected, result)
     }
 }

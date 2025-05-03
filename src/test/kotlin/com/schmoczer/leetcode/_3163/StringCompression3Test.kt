@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._3163
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class StringCompression3Test {
+    private companion object {
+        @JvmStatic
+        fun compressionInputs() = listOf(
+            Arguments.of("abcde", "1a1b1c1d1e"),
+            Arguments.of("aaaaaaaaaaaaaabb", "9a5a2b"),
+            Arguments.of("aabbcc", "2a2b2c"),
+        )
+    }
+
     private lateinit var sut: StringCompression3
 
     @BeforeEach
@@ -12,13 +23,11 @@ class StringCompression3Test {
         sut = StringCompression3()
     }
 
-    @Test
-    fun `abcde is compressed to 1a1b1c1d1e`() {
-        assertEquals("1a1b1c1d1e", sut.compressedString("abcde"))
-    }
+    @ParameterizedTest(name = "compressed string for input \"{0}\" is \"{1}\"")
+    @MethodSource("compressionInputs")
+    fun `returns the correct compressed string`(input: String, expected: String) {
+        val result = sut.compressedString(input)
 
-    @Test
-    fun `aaaaaaaaaaaaaabb is compressed to 9a5a2b`() {
-        assertEquals("9a5a2b", sut.compressedString("aaaaaaaaaaaaaabb"))
+        assertEquals(expected, result)
     }
 }

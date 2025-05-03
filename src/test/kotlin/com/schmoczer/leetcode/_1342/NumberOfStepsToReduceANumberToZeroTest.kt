@@ -2,9 +2,20 @@ package com.schmoczer.leetcode._1342
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class NumberOfStepsToReduceANumberToZeroTest {
+    private companion object {
+        @JvmStatic
+        fun stepsAndNumbers() = listOf(
+            Arguments.of(6, 14),
+            Arguments.of(4, 8),
+            Arguments.of(12, 123),
+        )
+    }
+
     private lateinit var sut: NumberOfStepsToReduceANumberToZero
 
     @BeforeEach
@@ -12,31 +23,9 @@ class NumberOfStepsToReduceANumberToZeroTest {
         sut = NumberOfStepsToReduceANumberToZero()
     }
 
-    @Test
-    fun `6 steps to reduce number 14`() {
-        val input = 14
-        val expected = 6
-
-        val result = sut.numberOfSteps(input)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `4 steps to reduce number 8`() {
-        val input = 8
-        val expected = 4
-
-        val result = sut.numberOfSteps(input)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `12 steps to reduce number 123`() {
-        val input = 123
-        val expected = 12
-
+    @ParameterizedTest(name = "{0} steps to reduce number {1}")
+    @MethodSource("stepsAndNumbers")
+    fun `returns the correct number of steps`(expected: Int, input: Int) {
         val result = sut.numberOfSteps(input)
 
         assertEquals(expected, result)

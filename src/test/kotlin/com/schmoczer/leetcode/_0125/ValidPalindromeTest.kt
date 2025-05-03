@@ -1,11 +1,23 @@
 package com.schmoczer.leetcode._0125
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.assertEquals
 
 class ValidPalindromeTest {
+    private companion object {
+        @JvmStatic
+        fun palindromeInputs() = listOf(
+            Arguments.of("A man, a plan, a canal: Panama", true),
+            Arguments.of("race a car", false),
+            Arguments.of(" ", true),
+            Arguments.of("0P", false),
+            Arguments.of(".,", true),
+        )
+    }
+
     private lateinit var sut: ValidPalindrome
 
     @BeforeEach
@@ -13,28 +25,11 @@ class ValidPalindromeTest {
         sut = ValidPalindrome()
     }
 
-    @Test
-    fun `amanaplanacanalpanama is a palindrome`() {
-        assertTrue(sut.isPalindrome("A man, a plan, a canal: Panama"))
-    }
+    @ParameterizedTest(name = "\"{0}\" is a palindrome: {1}")
+    @MethodSource("palindromeInputs")
+    fun `validates if a string is a palindrome`(input: String, expected: Boolean) {
+        val result = sut.isPalindrome(input)
 
-    @Test
-    fun `"raceacar" is not a palindrome`() {
-        assertFalse(sut.isPalindrome("race a car"))
-    }
-
-    @Test
-    fun `blank String is a palindrome`() {
-        assertTrue(sut.isPalindrome(" "))
-    }
-
-    @Test
-    fun `0P is not a palindrome`() {
-        assertFalse(sut.isPalindrome("0P"))
-    }
-
-    @Test
-    fun `only punctuation is a palindrome`() {
-        assertTrue(sut.isPalindrome(".,"))
+        assertEquals(expected, result)
     }
 }

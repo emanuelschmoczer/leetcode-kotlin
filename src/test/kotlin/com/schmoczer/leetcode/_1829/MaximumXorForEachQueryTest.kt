@@ -1,10 +1,28 @@
 package com.schmoczer.leetcode._1829
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
 
 class MaximumXorForEachQueryTest {
+    private companion object {
+        @JvmStatic
+        fun xorInputs() = listOf(
+            Arguments.of(
+                intArrayOf(0, 1, 1, 3),
+                2,
+                intArrayOf(0, 3, 2, 3),
+            ),
+            Arguments.of(
+                intArrayOf(2, 3, 4, 7),
+                3,
+                intArrayOf(5, 2, 6, 5),
+            ),
+        )
+    }
+
     private lateinit var sut: MaximumXorForEachQuery
 
     @BeforeEach
@@ -12,22 +30,10 @@ class MaximumXorForEachQueryTest {
         sut = MaximumXorForEachQuery()
     }
 
-    @Test
-    fun `maximum xor for each query of 0,1,1,3 is 0,3,2,3`() {
-        val input = intArrayOf(0, 1, 1, 3)
-        val expected = intArrayOf(0, 3, 2, 3)
-
-        val result = sut.getMaximumXor(input, 2)
-
-        assertContentEquals(expected, result)
-    }
-
-    @Test
-    fun `maximum xor for each query of 2,3,4,7 is 5,2,6,5`() {
-        val input = intArrayOf(2, 3, 4, 7)
-        val expected = intArrayOf(5, 2, 6, 5)
-
-        val result = sut.getMaximumXor(input, 3)
+    @ParameterizedTest(name = "maximum xor for input {0} with maximum bit {1} is {2}")
+    @MethodSource("xorInputs")
+    fun `returns the correct maximum xor for each query`(input: IntArray, maximumBit: Int, expected: IntArray) {
+        val result = sut.getMaximumXor(input, maximumBit)
 
         assertContentEquals(expected, result)
     }

@@ -1,10 +1,21 @@
 package com.schmoczer.leetcode._2914
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class MinChangesTest {
+    private companion object {
+        @JvmStatic
+        fun changesInputs() = listOf(
+            Arguments.of("1001", 2),
+            Arguments.of("10", 1),
+            Arguments.of("0000", 0),
+        )
+    }
+
     private lateinit var sut: MinChanges
 
     @BeforeEach
@@ -12,18 +23,11 @@ class MinChangesTest {
         sut = MinChanges()
     }
 
-    @Test
-    fun `1001 needs 2 changes`() {
-        assertEquals(2, sut.minChanges("1001"))
-    }
+    @ParameterizedTest(name = "minimum changes for input \"{0}\" is {1}")
+    @MethodSource("changesInputs")
+    fun `returns the correct minimum changes`(input: String, expected: Int) {
+        val result = sut.minChanges(input)
 
-    @Test
-    fun `10 nees 1 change`() {
-        assertEquals(1, sut.minChanges("10"))
-    }
-
-    @Test
-    fun `0000 needs 0 changes`() {
-        assertEquals(0, sut.minChanges("0000"))
+        assertEquals(expected, result)
     }
 }

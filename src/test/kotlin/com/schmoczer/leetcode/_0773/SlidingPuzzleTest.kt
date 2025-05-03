@@ -1,10 +1,30 @@
 package com.schmoczer.leetcode._0773
 
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class SlidingPuzzleTest {
+    private companion object {
+        @JvmStatic
+        fun puzzleInputs() = listOf(
+            Arguments.of(
+                arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 0, 5)),
+                1,
+            ),
+            Arguments.of(
+                arrayOf(intArrayOf(1, 2, 3), intArrayOf(5, 4, 0)),
+                -1,
+            ),
+            Arguments.of(
+                arrayOf(intArrayOf(4, 1, 2), intArrayOf(5, 0, 3)),
+                5,
+            ),
+        )
+    }
+
     private lateinit var sut: SlidingPuzzle
 
     @BeforeEach
@@ -12,32 +32,10 @@ class SlidingPuzzleTest {
         sut = SlidingPuzzle()
     }
 
-    @Test
-    fun `board that is solved with 1 move`() {
-        val input = arrayOf(intArrayOf(1, 2, 3), intArrayOf(4, 0, 5))
-        val expected = 1
-
-        val result = sut.slidingPuzzle(input)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `unsolvable board`() {
-        val input = arrayOf(intArrayOf(1, 2, 3), intArrayOf(5, 4, 0))
-        val expected = -1
-
-        val result = sut.slidingPuzzle(input)
-
-        assertEquals(expected, result)
-    }
-
-    @Test
-    fun `board that is solved with 5 moves`() {
-        val input = arrayOf(intArrayOf(4, 1, 2), intArrayOf(5, 0, 3))
-        val expected = 5
-
-        val result = sut.slidingPuzzle(input)
+    @ParameterizedTest(name = "sliding puzzle for board {0} requires {1} moves")
+    @MethodSource("puzzleInputs")
+    fun `returns the correct number of moves`(board: Array<IntArray>, expected: Int) {
+        val result = sut.slidingPuzzle(board)
 
         assertEquals(expected, result)
     }
