@@ -42,7 +42,7 @@ class ValidParentheses {
             if (c == '(' || c == '[' || c == '{') {
                 stack.push(c)
             } else {
-                if (stack.isEmpty) {
+                if (stack.isEmpty()) {
                     return false
                 }
                 val openingBracket = stack.pop()
@@ -51,6 +51,6 @@ class ValidParentheses {
                 }
             }
         }
-        return stack.isEmpty
+        return stack.isEmpty()
     }
 }
